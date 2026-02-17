@@ -1,0 +1,54 @@
+services:
+
+    nginx:
+            image: nginx:1.29.5-alpine
+            container_name: skeleton-nginx
+            restart: always
+            ports:
+                - 80:80
+            volumes:
+                - ./..:/var/www
+                - ./sites-enabled:/etc/nginx/conf.d
+            networks:
+                - default
+
+    db:
+        image: postgres:18.2-alpine
+        container_name: skeleton-db
+        restart: always
+        ports: 
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
+        volumes:
+            - ./../databases:/var/lib/postgresql/data
+
+    php:
+        image: skeleton-php-8-4
+        container_name: skeleton-php
+        restart: always
+        user: "1000:1000"
+        build:
+            args:
+                user: ${USER}
+            context: ./php-8-4
+            dockerfile: Dockerfile
+        working_dir: /var/www
+        volumes:
+            - ./../laravel:/var/www
+            - ./php-config/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+
+    angular:
+        image: angular:21.1.4
+        container_name: skeleton-angular
+        restart: always
+        working_dir: /srv
+        build:
+            context: ./angular-21-1-4
+            dockerfile: Dockerfile
+        volumes:
+            - ./../angular:/srv
+        user: "1000:1000"
+        command: ng serve --host 0.0.0.0 --port 4200
+        ports: 
+            - 4200:4200
