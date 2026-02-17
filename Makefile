@@ -13,3 +13,9 @@ angular-create-project:
 		export PATH=/tmp/.npm-global/bin:$$PATH && \
 		npm install -g @angular/cli@21.1.4 && \
 		NG_CLI_ANALYTICS=false ng new angular --defaults --skip-git'
+
+laravel-create-project:
+	@docker run --rm --interactive --tty \
+	  --volume "$$(pwd):/app" \
+	  --user $$(id -u):$$(id -g) \
+	  composer:2.9.5 create-project laravel/laravel laravel
