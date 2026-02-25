@@ -1,12 +1,18 @@
 SHELL = /bin/sh
 
-.PHONY: start stop create-angular laravel-create-project copy
+.PHONY: start stop in-back in-front create-angular laravel-create-project copy
 
 start:
 	@docker-compose -f ./docker/docker-compose.yml -p ia up -d
 
 stop:
 	@docker-compose -f ./docker/docker-compose.yml -p ia down
+
+in-back:
+	@docker exec -it skeleton-php bash
+
+in-front:
+	@docker exec -it skeleton-angular bash
 
 angular-create-project:
 	@docker run -it --rm \
