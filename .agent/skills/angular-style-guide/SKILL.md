@@ -59,7 +59,7 @@ Step-by-step guidance, conventions, and patterns the agent should follow.
 All components must have a .scss, .ts, and .html file, but not a .spec.ts file.
 
 ```bash
-ng generate component <component-name> --skip-tests
+    docker exec -it skeleton-angular ng generate component <component-name> --skip-tests
 ```
 
 ## Create services
@@ -67,5 +67,5 @@ ng generate component <component-name> --skip-tests
 All services must have a .ts file, but not a .spec.ts file.
 
 ```bash
-ng generate service <service-name> --skip-tests
+    docker exec -it skeleton-angular ng generate service <service-name> --skip-tests
 ```
